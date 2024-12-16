@@ -1,0 +1,33 @@
+<configuration>
+    <appender name="REQUESTS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/requests.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %level: %msg | request #%X{requestNumber} %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="BOOKS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/books.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %level: %msg | request #%X{requestNumber} %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define the appender for console -->
+    <appender name="REQUESTS_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %level: %msg | request #%X{requestNumber} %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define the logger for requests -->
+    <logger name="request-logger" level="INFO">
+        <appender-ref ref="REQUESTS_FILE" />
+        <appender-ref ref="REQUESTS_CONSOLE" />
+    </logger>
+
+    <logger name="books-logger" level="INFO">
+        <appender-ref ref="BOOKS_FILE" />
+    </logger>
+
+</configuration>

@@ -1,0 +1,26 @@
+11-06-2024 11:10:38.098 INFO: Total Books found for requested filters is 0 | request #1 
+11-06-2024 11:10:38.429 INFO: Creating new Book with Title [The Partner] | request #2 
+11-06-2024 11:10:38.489 ERROR: Error: Book with the title [The Partner] already exists in the system | request #3 
+11-06-2024 11:10:38.617 INFO: Creating new Book with Title [A time to kill] | request #5 
+11-06-2024 11:10:38.741 INFO: Creating new Book with Title [half proof] | request #7 
+11-06-2024 11:10:38.742 DEBUG: Currently there are 2 Books in the system. New Book will be assigned with id 3 | request #7 
+11-06-2024 11:10:38.806 INFO: Total Books found for requested filters is 2 | request #8 
+11-06-2024 11:10:38.867 INFO: Total Books found for requested filters is 2 | request #9 
+11-06-2024 11:10:38.909 INFO: Update Book id [1] price to 50 | request #10 
+11-06-2024 11:10:38.909 DEBUG: Book [The Partner] price change: 70 --> 50 | request #10 
+11-06-2024 11:10:38.943 INFO: Removing book [A time to kill] | request #11 
+11-06-2024 11:10:38.943 DEBUG: After removing book [A time to kill] id: [2] there are 2 books in the system | request #11 
+11-06-2024 11:10:39.015 INFO: Total Books found for requested filters is 2 | request #12 
+14-06-2024 09:52:14.134 INFO: Total Books found for requested filters is 0 | request #1 
+14-06-2024 09:52:14.457 INFO: Creating new Book with Title [The Partner] | request #2 
+14-06-2024 09:52:14.508 ERROR: Error: Book with the title [The Partner] already exists in the system | request #3 
+14-06-2024 09:52:14.601 INFO: Creating new Book with Title [A time to kill] | request #5 
+14-06-2024 09:52:14.711 INFO: Creating new Book with Title [half proof] | request #7 
+14-06-2024 09:52:14.711 DEBUG: Currently there are 2 Books in the system. New Book will be assigned with id 3 | request #7 
+14-06-2024 09:52:14.746 INFO: Total Books found for requested filters is 2 | request #8 
+14-06-2024 09:52:14.838 INFO: Total Books found for requested filters is 2 | request #9 
+14-06-2024 09:52:14.881 INFO: Update Book id [1] price to 50 | request #10 
+14-06-2024 09:52:14.882 DEBUG: Book [The Partner] price change: 70 --> 50 | request #10 
+14-06-2024 09:52:14.931 INFO: Removing book [A time to kill] | request #11 
+14-06-2024 09:52:14.931 DEBUG: After removing book [A time to kill] id: [2] there are 2 books in the system | request #11 
+14-06-2024 09:52:15.000 INFO: Total Books found for requested filters is 2 | request #12 
