@@ -1,6 +1,10 @@
 package com.example.ServerExercise.model.book;
 
+import com.example.ServerExercise.entities.BookMongo;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Book {
     private int id;
@@ -69,6 +73,5 @@ public class Book {
     {
         return this.year <= 2100 && this.year>= 1940;
     }
-
-
+    // Convert from a comma-separated string to a List<Genre>
 }

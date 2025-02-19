@@ -3,6 +3,7 @@ import com.example.ServerExercise.loggim.LoggerHelper;
 import com.example.ServerExercise.model.book.Book;
 import com.example.ServerExercise.model.responses.ServerResponse;
 import com.example.ServerExercise.utils.BooksStoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,13 @@ import java.util.*;
 @RestController
 public class BooksStoreController
 {
-    private final BooksStoreService bookService = new BooksStoreService();
+    private final BooksStoreService bookService;
     private final LoggerHelper loggerHelper = new LoggerHelper();
+    // Constructor injection for BooksStoreService
+    @Autowired
+    public BooksStoreController(BooksStoreService bookService) {
+        this.bookService = bookService;
+    }
     @GetMapping("/books/health")
     public String Health() {
         loggerHelper.initStartTimeCurrentReq();
@@ -52,7 +58,8 @@ public class BooksStoreController
                                                         @RequestParam(name = "price-less-than", required = false) Integer priceLessThan,
                                                         @RequestParam(name = "year-bigger-than", required = false) Integer yearBiggerThan,
                                                         @RequestParam(name = "year-less-than", required = false) Integer yearLessThan,
-                                                        @RequestParam(required = false) String genres)
+                                                        @RequestParam(required = false) String genres,
+                                                        @RequestParam String persistenceMethod)
     {
         loggerHelper.initStartTimeCurrentReq();
         loggerHelper.addRequest();
@@ -65,7 +72,7 @@ public class BooksStoreController
                     Optional.ofNullable(priceLessThan),
                     Optional.ofNullable(yearBiggerThan),
                     Optional.ofNullable(yearLessThan),
-                    Optional.ofNullable(genres))
+                    Optional.ofNullable(genres),persistenceMethod)
                     .size();
             ServerResponse response = new ServerResponse(numberFilteredBooks);
             this.loggerHelper.addLogToBooksCountAndDetailsEndPoint(numberFilteredBooks);
@@ -83,7 +90,9 @@ public class BooksStoreController
                                                         @RequestParam(name = "price-less-than", required = false) Integer priceLessThan,
                                                         @RequestParam(name = "year-bigger-than", required = false) Integer yearBiggerThan,
                                                         @RequestParam(name = "year-less-than", required = false) Integer yearLessThan,
-                                                        @RequestParam(required = false) String genres)
+                                                        @RequestParam(required = false) String genres,
+                                                        @RequestParam String persistenceMethod)
+
     {
         loggerHelper.initStartTimeCurrentReq();
         loggerHelper.addRequest();
@@ -96,7 +105,7 @@ public class BooksStoreController
                             Optional.ofNullable(priceLessThan),
                             Optional.ofNullable(yearBiggerThan),
                             Optional.ofNullable(yearLessThan),
-                            Optional.ofNullable(genres));
+                            Optional.ofNullable(genres), persistenceMethod);
             // Convert the set to a sorted set using TreeSet
             SortedSet<Book> sortedResult = new TreeSet<>(Comparator.comparing(Book::getTitle, String.CASE_INSENSITIVE_ORDER));
             sortedResult.addAll(result);
@@ -112,13 +121,14 @@ public class BooksStoreController
         }
     }
     @GetMapping(value = "/book", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ServerResponse> getSingleBookData(@RequestParam Integer id)
+    public ResponseEntity<ServerResponse> getSingleBookData(@RequestParam Integer id,
+                                                            @RequestParam String persistenceMethod)
     {
         loggerHelper.initStartTimeCurrentReq();
         loggerHelper.addRequest();
         loggerHelper.addInfoLogForLogRequests("/book","GET");
 
-        Book book = bookService.IsBookExist(id);
+        Book book = bookService.IsBookExist(id,persistenceMethod);
         if(book==null) {
             loggerHelper.addDebugLogForLogRequests();
             ServerResponse serverResponse = new ServerResponse("Error: no such Book with id " + id);
@@ -138,7 +148,7 @@ public class BooksStoreController
 
         try {
             int oldPrice = this.bookService.checkAndUpdatePrice(id, price);
-            Book book = this.bookService.IsBookExist(id);
+            Book book = this.bookService.IsBookExist(id,"MONGO");
             ServerResponse response = new ServerResponse(oldPrice);
             this.loggerHelper.addLogsToUpdateBookPriceEndPoint(id,book.getTitle(),oldPrice,price);
             loggerHelper.addDebugLogForLogRequests();
@@ -165,7 +175,7 @@ public class BooksStoreController
         loggerHelper.addRequest();
         loggerHelper.addInfoLogForLogRequests("/book","DELETE");
         try {
-            Book book = this.bookService.IsBookExist(id);
+            Book book = this.bookService.IsBookExist(id, "MONGO");
             int numberBooks = this.bookService.checkAndDeleteBook(id);
             ServerResponse response = new ServerResponse(numberBooks);
             loggerHelper.addLogsToDeleteBookEndPoint(id,book.getTitle(),numberBooks);
